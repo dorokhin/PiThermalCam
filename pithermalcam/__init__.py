@@ -31,11 +31,14 @@ def display_camera_live(output_folder: str = '/home/pi/pithermalcam/saved_snapsh
     thermcam.display_camera_onscreen()
 
 
-def stream_camera_online(ip_address='127.0.0.1', output_folder: str = '/home/pi/pithermalcam/saved_snapshots/'):
+def stream_camera_online(
+        ip_address='127.0.0.1',
+        output_folder: str = '/home/pi/pithermalcam/saved_snapshots/',
+        debug=False):
     """Start a flask server streaming the camera live"""
     # This is a clunky way to do this, the better approach would likely to be restructuring web_server.py with the Flask Blueprint approach
     # If the code were restructure for this, the code would be much more complex and opaque for running directly though
-    web_server.start_server(ip_address=ip_address, output_folder=output_folder)
+    web_server.start_server(ip_address=ip_address, output_folder=output_folder, debug=debug)
 
 
 # Add attributes to existing pithermalcam object

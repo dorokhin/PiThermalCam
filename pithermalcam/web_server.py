@@ -8,7 +8,7 @@ try:  # If called as an imported module
     from pithermalcam import pithermalcam
 except:  # If run directly
     from pi_therm_cam import pithermalcam
-from flask import Response, request
+from flask import Response, request, send_from_directory
 from flask import Flask
 from flask import render_template
 import threading
@@ -147,7 +147,7 @@ def generate():
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
 
 
-def start_server(ip_address, output_folder: str = '/home/pi/pithermalcam/saved_snapshots/'):
+def start_server(ip_address, output_folder: str = '/home/pi/pithermalcam/saved_snapshots/', debug=False):
     global thermcam
     # initialize the video stream and allow the camera sensor to warmup
     thermcam = pithermalcam(output_folder=output_folder)
@@ -164,7 +164,7 @@ def start_server(ip_address, output_folder: str = '/home/pi/pithermalcam/saved_s
     print(f'Server can be found at {ip}:{port}')
 
     # start the flask app
-    app.run(host=ip, port=port, debug=False, threaded=True, use_reloader=False)
+    app.run(host=ip, port=port, debug=debug, threaded=True, use_reloader=False)
 
 
 # If this is the main thread, simply start the server
